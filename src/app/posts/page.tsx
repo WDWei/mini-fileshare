@@ -1,8 +1,11 @@
 import { createPost } from "@/actions/actions";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
 import Link from "next/link";
 
 export default async function PostsPage() {
+  const session = await auth();
+  if (!session) return <div>Not authenticated</div>;
   // const posts = await prisma.post.findMany({
   //   //Filtering
   //   where: {
@@ -31,6 +34,7 @@ export default async function PostsPage() {
   // const postsCount = prisma.post.count();
   return (
     <main className="flex flex-col items-center gap-y-5 pt-24 text-center">
+      <pre>{JSON.stringify(session, null, 2)}</pre>
       <h1 className="text-3xl font-semibold">
         {" "}
         All Posts {user?.posts.length}
