@@ -3,9 +3,10 @@ NextJs, Authentication, ORM, Database, Deployment.
 
 ## TODO
 
-- Create local Auth using PassPortJS(Or other equivilent)
-- Create middlewares for Auth
 - Create API links to data providers
+- Using SupaBase
+- Create NewBuckets based on new users.
+- Have them to upload/delete and reference file to DB
 - Finalise DB design for what is needed for a typical fileshare
 - Intergrate DB and login
 - CSS styling
@@ -14,3 +15,4 @@ NextJs, Authentication, ORM, Database, Deployment.
 
 - Basic ENV setup
 - ORM(Prisma) integrated with PSQL
+- Local Basic Auth done using Auth.JS (Needs more integration)
