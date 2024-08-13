@@ -8,7 +8,7 @@ export async function createUser(formData: FormData) {
   try {
     await prisma.user.create({
       data: {
-        email: formData.get("username") as string,
+        userName: formData.get("username") as string,
         hashedPassword: formData.get("password") as string,
       },
     });
@@ -23,10 +23,10 @@ export async function createUser(formData: FormData) {
   }
 }
 
-export async function GetUser(email: string) {
+export async function GetUser(userName: string) {
   const user = await prisma.user.findUnique({
     where: {
-      email: email,
+      userName: userName,
     },
   });
   if (!user) return null;
@@ -44,7 +44,7 @@ export async function createPost(formData: FormData) {
         content: formData.get("content") as string,
         author: {
           connect: {
-            email: "john@gmail",
+            userName: "john@gmail",
           },
         },
       },
@@ -76,4 +76,19 @@ export async function editPost(formData: FormData, id: string) {
 
 export async function deletePost(id: string) {
   await prisma.post.delete({ where: { id } });
+}
+
+/////
+//Related to FileUpload Actions
+//Call Prisma Upload above (Invoking another function, just pass the Form data with ID)
+export async function fileUpload(formData: FormData) {
+  console.log(formData);
+  const fileData = formData.get("uploadedFile") as File;
+  const userID = formData.get("userID") as string;
+  console.log(fileData);
+  console.log(userID);
+  //Call Supabox to upload
+  //Then call Prisma function here to upload to DB
+  //Then maybe revalidate? and show post.
+  return console.log("Called FileUploader!");
 }

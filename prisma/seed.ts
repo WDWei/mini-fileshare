@@ -10,10 +10,10 @@ const initialPosts: Prisma.PostCreateInput[] = [
     author: {
       connectOrCreate: {
         where: {
-          email: "john@gmail.com",
+          userName: "john@gmail.com",
         },
         create: {
-          email: "john@gmail.com",
+          userName: "john@gmail.com",
           hashedPassword: "asdasasdasd",
         },
       },

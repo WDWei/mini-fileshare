@@ -24,13 +24,16 @@ async function onSubmit(event: FormEvent<HTMLFormElement>) {
 export default async function Home() {
   const session = await auth();
   //To fix null syntax issue
-  let user = null;
-  if (session !== null) user = session.user;
+  let isLogin = false;
+  if (session?.user) {
+    isLogin = true;
+  }
+  console.log(session?.user);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {user ? (
+      {isLogin ? (
         <div>
-          <h1>WELCOME BACK TEST USER</h1>
+          <h1>WELCOME BACK {session?.user?.name}</h1>
           <SignOut></SignOut>
         </div>
       ) : (

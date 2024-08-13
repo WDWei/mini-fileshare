@@ -25,7 +25,7 @@ export default async function PostsPage() {
   // });
   const user = await prisma.user.findUnique({
     where: {
-      email: "john@gmail",
+      userName: "john@gmail",
     },
     include: {
       posts: true,

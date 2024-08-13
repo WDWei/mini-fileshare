@@ -9,21 +9,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       credentials: {
-        email: {},
+        username: {},
         password: {},
       },
       authorize: async (credentials) => {
         let user = null;
-        user = await GetUser(credentials.email);
+        user = await GetUser(credentials.username);
         if (!user) {
           // No user found, so this is their first attempt to login
           // meaning this is also the place you could do registration
 
-          //await createUser(credentials);
           console.log("User not found.");
           throw new Error("User not found.");
         }
-        //const hashedPassword = await bcrypt.hash(password, 10);
         const match = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
@@ -31,8 +29,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!match) {
           throw new Error("User not found.");
         }
-        //NEEDS A RETURN VALUE (PREVIOUSLY WAS NOT RETURNED)
-        return user;
+        //Return values matters to have something in the session token
+        //https://github.com/nextauthjs/next-auth/discussions/2762
+        return {
+          name: user.userName,
+        };
       },
     }),
   ],
